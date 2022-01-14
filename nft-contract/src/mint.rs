@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use near_sdk::env;
 
 use crate::*;
@@ -16,7 +18,9 @@ impl Contract {
         let before_storage_usage = env::storage_usage();
 
         let token = Token {
-            owner_id: receiver_id
+            owner_id: receiver_id,
+            approved_account_ids: HashMap::default(),
+            next_approval_id: 0
         };
 
         assert!(

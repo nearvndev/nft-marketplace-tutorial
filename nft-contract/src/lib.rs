@@ -4,6 +4,7 @@ use near_sdk::{AccountId, collections::LookupMap};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::json_types::Base64VecU8;
+use std::collections::HashMap;
 
 pub type TokenId = String;
 
@@ -13,6 +14,7 @@ pub use crate::metadata::*;
 pub use crate::mint::*;
 pub use crate::enumeration::*;
 pub use crate::nft_core::*;
+pub use crate::approval::*;
 
 mod metadata;
 mod mint;
@@ -20,6 +22,7 @@ mod internal;
 mod utils;
 mod enumeration;
 mod nft_core;
+mod approval;
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]

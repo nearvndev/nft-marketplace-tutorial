@@ -1,8 +1,11 @@
 use crate::*;
+use std::collections::HashMap;
 
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct Token {
-    pub owner_id: AccountId
+    pub owner_id: AccountId,
+    pub approved_account_ids: HashMap<AccountId, u64>,
+    pub next_approval_id: u64
 }
 
 #[derive(Serialize, Deserialize)]
