@@ -1,9 +1,9 @@
 use near_sdk::collections::{LazyOption, UnorderedSet, UnorderedMap};
-use near_sdk::{near_bindgen, CryptoHash, Balance, env, Promise, ext_contract, log, Gas, PromiseResult, PromiseOrValue};
+use near_sdk::{near_bindgen, CryptoHash, Balance, env, Promise, ext_contract, log, Gas, PromiseResult, PromiseOrValue, PanicOnDefault};
 use near_sdk::{AccountId, collections::LookupMap};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::serde::{Deserialize, Serialize};
-use near_sdk::json_types::Base64VecU8;
+use near_sdk::json_types::{Base64VecU8, U128};
 use std::collections::HashMap;
 
 pub type TokenId = String;
@@ -15,6 +15,7 @@ pub use crate::mint::*;
 pub use crate::enumeration::*;
 pub use crate::nft_core::*;
 pub use crate::approval::*;
+pub use crate::event::*;
 
 mod metadata;
 mod mint;
@@ -23,9 +24,10 @@ mod utils;
 mod enumeration;
 mod nft_core;
 mod approval;
+mod event;
 
 #[near_bindgen]
-#[derive(BorshDeserialize, BorshSerialize)]
+#[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 struct Contract {
     pub owner_id: AccountId,
 
@@ -167,7 +169,7 @@ mod tests {
 
         testing_env!(context.attached_deposit(1).build());
 
-        contract.nft_transfer(accounts(1).to_string(), token_id.clone(), None);
+        contract.nft_transfer(accounts(1).to_string(), token_id.clone(), 0,None);
         
         let new_token = contract.nft_token(token_id.clone()).unwrap();
         assert_eq!(new_token.owner_id, accounts(1).to_string());
