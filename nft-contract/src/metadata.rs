@@ -9,7 +9,7 @@ pub struct Token {
     pub royalty: HashMap<AccountId, u32>
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct JsonToken {
     pub owner_id: AccountId,
