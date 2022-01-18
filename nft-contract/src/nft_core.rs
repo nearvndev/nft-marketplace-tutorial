@@ -1,5 +1,3 @@
-use near_sdk::env::log;
-
 use crate::*;
 
 const GAS_FOR_RESOLVE_TRANSFER: Gas = 10_000_000_000_000;

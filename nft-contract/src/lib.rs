@@ -8,7 +8,6 @@ use std::collections::HashMap;
 
 pub type TokenId = String;
 
-use crate::internal::*;
 use crate::utils::*;
 pub use crate::metadata::*;
 pub use crate::mint::*;
@@ -16,6 +15,7 @@ pub use crate::enumeration::*;
 pub use crate::nft_core::*;
 pub use crate::approval::*;
 pub use crate::event::*;
+pub use crate::royalty::*;
 
 mod metadata;
 mod mint;
@@ -25,6 +25,7 @@ mod enumeration;
 mod nft_core;
 mod approval;
 mod event;
+mod royalty;
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]

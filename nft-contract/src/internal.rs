@@ -71,7 +71,8 @@ impl Contract {
             let new_token = Token {
                 owner_id: receiver_id.clone(),
                 approved_account_ids: HashMap::default(),
-                next_approval_id: token.next_approval_id
+                next_approval_id: token.next_approval_id,
+                royalty: token.royalty.clone()
             };
 
             self.tokens_by_id.insert(token_id,&new_token);
