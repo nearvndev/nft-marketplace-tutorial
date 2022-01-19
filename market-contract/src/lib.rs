@@ -80,7 +80,7 @@ impl Contract {
     }
 
     #[payable]
-    pub fn storate_deposit(&mut self, account_id: Option<AccountId>) {
+    pub fn storage_deposit(&mut self, account_id: Option<AccountId>) {
         let storage_account_id = account_id.unwrap_or(env::predecessor_account_id());
         let deposit = env::attached_deposit();
 
@@ -121,9 +121,7 @@ impl Contract {
         U128(STORAGE_PER_SALE)
     }
 
-    pub fn storage_balance_of(&self, account_id: Option<AccountId>) -> U128 {
-        let owner_id = account_id.unwrap_or(env::predecessor_account_id());
-
-        U128(self.storage_deposit.get(&owner_id).unwrap_or(0))
+    pub fn storage_balance_of(&self, account_id: AccountId) -> U128 {
+        U128(self.storage_deposit.get(&account_id).unwrap_or(0))
     }
 }
