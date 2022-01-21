@@ -8,14 +8,12 @@ pub trait NonFungibleTokenApprovalReceiver {
 #[derive(Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct SaleArgs {
-    pub sale_conditions: SalePriceInYoctoNear
+    pub sale_conditions: SalePrice
 }
+
 
 #[near_bindgen]
 impl NonFungibleTokenApprovalReceiver for Contract {
-    /**
-     * msg: {"sale_conditions": "100000000000000"}
-     */
     fn nft_on_approve(&mut self, token_id: TokenId, owner_id: AccountId, approval_id: u64, msg: String) {
         // User => NFT contract => Market Contract
         // Signer account => Predecessor account => Current account

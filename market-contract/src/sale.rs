@@ -31,6 +31,7 @@ pub trait NFTContract {
 #[ext_contract(ext_self)]
 pub trait MarketContract {
     fn resolve_purchase(&mut self, buyer_id: AccountId, price: U128) -> Promise;
+    fn ft_resolve_purchase(&mut self, buyer_id: AccountId, price: SalePrice) -> Promise;
 }
 
 
@@ -48,7 +49,7 @@ impl Contract {
     }
 
     #[payable]
-    pub fn update_price(&mut self, nft_contract_id: AccountId, token_id: TokenId, price: U128) {
+    pub fn update_price(&mut self, nft_contract_id: AccountId, token_id: TokenId, price: SalePrice) {
         assert_one_yocto();
 
         let contract_and_token_id = format!("{}{}{}", nft_contract_id.clone(), ".", token_id.clone());
@@ -72,8 +73,11 @@ impl Contract {
         let buyer_id = env::predecessor_account_id();
         assert_ne!(buyer_id, sale.owner_id, "Can not bid on your own sale");
 
-        let price = sale.sale_conditions.0;
+        let price = sale.sale_conditions.amount.0;
         assert!(deposit >= price, "Attached deposit must be greater than or equal current price: {}", price);
+
+        // Check sale conditions
+        assert!(sale.sale_conditions.is_native, "Only accept payout with NEAR");
 
         self.process_purchase(
             nft_contract_id,
